@@ -4,10 +4,15 @@
  */
 package com.mycompany.gestaovenda.modelo.dao.conexao;
 
+import java.sql.Connection;
+import java.sql.SQLException;
+
 /**
  *
  * @author pc01
  */
 public interface Conexao {
+    
+    public Connection obterConexao() throws SQLException;
     
 }
