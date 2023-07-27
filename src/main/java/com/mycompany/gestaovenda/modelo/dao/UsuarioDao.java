@@ -6,9 +6,14 @@ package com.mycompany.gestaovenda.modelo.dao;
 
 import com.mycompany.gestaovenda.modelo.conexao.Conexao;
 import com.mycompany.gestaovenda.modelo.conexao.ConexaoMysql;
+import com.mycompany.gestaovenda.modelo.dominio.Perfil;
 import com.mycompany.gestaovenda.modelo.dominio.Usuario;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -70,12 +75,37 @@ public class UsuarioDao {
         
         if(usuario.getId() != 0L){
             preparedStatement.setLong(6, usuario.getId());
-        }
-        
-        
+        }      
     }
     
+    public List<Usuario> buscarTodosUsuario (){
+        String sql = "SELECT * FROM usuario";
+        List<Usuario> usuarios = new ArrayList<>();
+       try {
+           ResultSet result = conexao.obterConexao().prepareStatement(sql).executeQuery();
+           while(result.next()){
+                   usuarios.add(getUsuario(result));
+           }
+    } catch(SQLException e) {
+        System.out.println(String.format("Error: ", e.getMessage()));  
+    }
     
+       return usuarios;
+    }
     
+    private Usuario getUsuario(ResultSet result) throws SQLException{
+        Usuario usuario = new Usuario();
+        usuario.setId(result.getLong("id"));
+        usuario.setNome(result.getString("nome"));
+        usuario.setUsuario(result.getString("usuario"));
+        usuario.setSenha(result.getString("senha"));
+        usuario.setPerfil(result.getObject("Perfil", Perfil.class));
+        usuario.setEstado(result.getBoolean("estado"));
+        usuario.setDataHoraCriacao(result.getObject("data hora criaçao", LocalDateTime.class));
+        usuario.setUltimoLogin(result.getObject("ultimo login", LocalDateTime.class));
+        
+        return usuario;
+ 
+    }
     
 }

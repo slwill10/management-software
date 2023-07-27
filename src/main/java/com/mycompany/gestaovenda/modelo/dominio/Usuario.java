@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 public class Usuario {
     private long id;
     private String nome;
-     private String usuario;
+    private String usuario;
     private String senha;
     private Perfil perfil;
     private boolean estado;
