@@ -14,6 +14,8 @@ import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
 
 /**
  *
@@ -72,9 +74,16 @@ public class UsuarioDao {
     }
 
     private void preencherValoresPreperedStatement(PreparedStatement preparedStatement, Usuario usuario) throws SQLException {
+        
+        
+        BCryptPasswordEncoder passwordEncode = new BCryptPasswordEncoder();
+        
+        String senhaCrypt = passwordEncode.encode(usuario.getSenha());
+        
+        
         preparedStatement.setString(1, usuario.getNome());
         preparedStatement.setString(2, usuario.getUsuario());
-        preparedStatement.setString(3, usuario.getSenha());
+        preparedStatement.setString(3, senhaCrypt);
         preparedStatement.setString(4, usuario.getPerfil().name());
         preparedStatement.setBoolean(5, usuario.isEstado());
 
