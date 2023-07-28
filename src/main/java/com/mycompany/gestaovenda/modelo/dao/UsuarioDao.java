@@ -31,7 +31,6 @@ public class UsuarioDao {
 
     public String salvar(Usuario usuario) {
         return usuario.getId() == 0L ? adicionar(usuario) : editar(usuario);
-
     }
 
     private String adicionar(Usuario usuario) {
@@ -74,13 +73,11 @@ public class UsuarioDao {
     }
 
     private void preencherValoresPreperedStatement(PreparedStatement preparedStatement, Usuario usuario) throws SQLException {
-        
-        
+              
         BCryptPasswordEncoder passwordEncode = new BCryptPasswordEncoder();
         
         String senhaCrypt = passwordEncode.encode(usuario.getSenha());
-        
-        
+             
         preparedStatement.setString(1, usuario.getNome());
         preparedStatement.setString(2, usuario.getUsuario());
         preparedStatement.setString(3, senhaCrypt);

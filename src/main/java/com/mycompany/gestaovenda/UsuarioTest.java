@@ -18,9 +18,9 @@ public class UsuarioTest {
     public static void main(String[] args) {
         Usuario usuario = new Usuario(0L, "Leandro Lima", "Lima", "4321", Perfil.ADMIN, null, null);
         
-        UsuarioDao usuarioDao = new UsuarioDao();       
+       UsuarioDao usuarioDao = new UsuarioDao();       
        String mensagem = usuarioDao.salvar(usuario);
-        System.out.println(usuario);
+       System.out.println(usuario);
     }
     
 }
